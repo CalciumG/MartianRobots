@@ -7,9 +7,6 @@ namespace MartianRobotUnitTests
     public class RobotShould
     {
 
-        // [SetUp]
-        // does x unit have setup like Nunit?
-
         [Fact]
         public void TurnLeft()
         {
@@ -18,7 +15,6 @@ namespace MartianRobotUnitTests
 
             robot.TurnLeft();
 
-            Console.WriteLine(robot.direction);
             Assert.Equal("W", robot.direction);
         }
 
@@ -30,7 +26,6 @@ namespace MartianRobotUnitTests
 
             robot.TurnRight();
 
-            Console.WriteLine(robot.direction);
             Assert.Equal("E", robot.direction);
         }
         
@@ -42,7 +37,6 @@ namespace MartianRobotUnitTests
 
             robot.MoveForward();
 
-            Console.WriteLine(robot);
             Assert.Equal(3, robot.y);
         }
 
@@ -51,7 +45,7 @@ namespace MartianRobotUnitTests
         {
             Robot robot = new Robot("1 2 N");
 
-            robot.Move("LFLFLFLFF");
+            robot.Move("LFLFLFLFF", 6, 5);
 
             Assert.Equal("1 3 N", robot.x + " " + robot.y + " " + robot.direction);
         }

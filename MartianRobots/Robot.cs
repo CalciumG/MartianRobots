@@ -16,14 +16,6 @@ namespace MartianRobots
             Int32.TryParse(location.Split(" ")[0], out x);
             Int32.TryParse(location.Split(" ")[1], out y);
             direction = location.Split(" ")[2];
-
-            //string locationWithoutWhiteSpace = String.Concat(location.Where(c => !Char.IsWhiteSpace(c)));
-            //Console.WriteLine(locationWithoutWhiteSpace);
-
-            //x = locationWithoutWhiteSpace[0];
-            //y = locationWithoutWhiteSpace[1];
-            //direction = locationWithoutWhiteSpace[2].ToString();
-
         }
 
         public void TurnLeft()
@@ -85,10 +77,9 @@ namespace MartianRobots
             }
         }
 
-        public string Move(string command)
+        public string Move(string command, int surfaceX, int surfaceY)
         {
             char[] instructions = command.ToCharArray();
-            var builder = new StringBuilder();
 
             foreach (var item in instructions)
             {
@@ -106,7 +97,10 @@ namespace MartianRobots
                 }
 
             }
-            return $"Instructions: {command} {Environment.NewLine}Result = {x.ToString()}, {y.ToString()}, {direction}";
+
+            var result = (x > surfaceX || x < 0) || (y > surfaceY || y < 0) ? "LOST" : "";
+                
+            return $"Instructions: {command} {Environment.NewLine}Result = {result} {x}, {y}, {direction} {Environment.NewLine}";
         }
     }
 }
