@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MartianRobots
 {
@@ -13,9 +10,22 @@ namespace MartianRobots
 
         public Robot(string location)
         {
-            Int32.TryParse(location.Split(" ")[0], out x);
-            Int32.TryParse(location.Split(" ")[1], out y);
-            direction = location.Split(" ")[2];
+            try
+            {
+                Int32.TryParse(location.Split(" ")[0], out x);
+                Int32.TryParse(location.Split(" ")[1], out y);
+                direction = location.Split(" ")[2];
+
+                if (x > 50 || y > 50)
+                {
+                    throw new ArgumentException("The maximum value for any coordinate is 50.");
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Environment.Exit(0);
+            }
         }
 
         public void TurnLeft()
@@ -81,6 +91,19 @@ namespace MartianRobots
         {
             char[] instructions = command.ToCharArray();
 
+            try 
+            { 
+                if (instructions.Length >= 100)
+                {
+                    throw new ArgumentException("All instruction strings should be less than 100 characters in length.");
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Environment.Exit(0);
+            }
+
             foreach (var item in instructions)
             {
                 switch (item)
@@ -100,7 +123,7 @@ namespace MartianRobots
 
             var result = (x > surfaceX || x < 0) || (y > surfaceY || y < 0) ? "LOST" : "";
                 
-            return $"Instructions: {command} {Environment.NewLine}Result = {result} {x}, {y}, {direction} {Environment.NewLine}";
+            return $"Instructions: {command} {Environment.NewLine}Result = {x}, {y}, {direction} {result} {Environment.NewLine}";
         }
     }
 }
